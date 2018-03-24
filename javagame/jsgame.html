@@ -1,0 +1,37 @@
+<!-- Game modified from source: https://goo.gl/h9LE58   -->
+<!-- Original game is Flappy Bird. Youtube tutorial     -->
+<!-- related to game can be found:                      -->
+<!-- https://www.youtube.com/watch?v=L07i4g-zhDA        -->
+
+<!-- Part of the code also from course material              -->
+
+<!-- Modifications made by MaHir                        -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Game</title>
+  <meta charset="utf-8"/>
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="jsgame.js"></script>
+  <link rel="stylesheet" type="text/css" href="jsstyle.css"/>
+
+</head>
+<body>
+  <div id="info">
+    <p id="infotext">
+      Try to void obstacles.<br>
+      Use arrowkeys to move.<br> </p>
+
+    <table id="score_list"></table><br>
+    <div id="buttons">
+      <button id="start">New Game</button>
+      <button id="submit_score">Submit score</button>
+      <button id="save">Save</button>
+      <button id="load">Load</button>
+    </div>
+  </div>
+<canvas id="canvas" width="288" height="512" position="absolute" z-index="-1"></canvas>
+
+</body>
+</html>

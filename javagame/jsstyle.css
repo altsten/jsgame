@@ -1,0 +1,45 @@
+#infotext {
+  font-family:sans-serif;
+  padding:1em;
+  font-weight:900;
+  display:block;
+}
+
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+button {
+  display: block;
+  width:250px;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #4CAF50;
+}
+button:hover {background-color: #3e8e41}
+
+button:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+table {
+    border-collapse: collapse;
+    width: 250px;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
