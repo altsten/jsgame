@@ -20,12 +20,15 @@ bg.src = "images/road.png";
 obstacleLeft.src = "images/objLeft.png";
 obstacleRight.src = "images/objRight.png";
 
-// variables related coordinates
+// variables related coordinates and size
 var gap = 85;
 var constant;
 
 var bX = 140;
 var bY = 300;
+
+var height;
+var width;
 
 // player's score
 var score = 0;
@@ -44,6 +47,13 @@ $(document).ready(function (){
 
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
+
+  // Canvas adapts the dimensions of parent window
+  width=window.innerWidth;
+  height=window.innerHeight;
+
+  canvas.width=width;
+  canvas.height=height;
 
 
   // Eventlistener for player's arrow keys
@@ -70,7 +80,7 @@ $(document).ready(function (){
   $("#start").click(function(){
     // Removes scorelist from view
     $("#score_list").html("");
-	
+
 
     // Initializes Player's position and obstacles
     obstacles = [] ;
@@ -87,9 +97,7 @@ $(document).ready(function (){
     dict_scores=[];
 
 	$("#info").hide();
-    $("#info").addClass("hide");
-    $("#canvas").addClass("show");
-    PlayGame();
+  PlayGame();
 
   });
 
@@ -112,16 +120,31 @@ $(document).ready(function (){
   $("#load").click(function(){
     //For debugging before real actions have been added
     alert("Load pressed");
-    Save();
+    Load();
   });
 
   // Eventlistener for incoming messages and errors
   window.addEventListener("message", function(e) {
       if(e.data.messageType === "LOAD") {
-        obstacles = e.data.gameState.obstacles;
+
+        // For debugging
+        alert("Game noticed LOAD, starting game with loaded specs");
+
         score = e.data.gameState.score;
         bX = e.data.gameState.bX;
         bY = e.data.gameState.bY;
+
+        // Game starts with specs above
+        // and basic setting below
+        gamecontinues=1;
+        obstacles = [] ;
+        obstacles[0] = {
+          x : -100,
+          y : 0
+        };
+
+        $("#info").hide();
+        PlayGame();
       }
       else if (e.data.messageType === "ERROR") {
         alert(e.data.info);
@@ -142,9 +165,8 @@ function Save(){
         "messageType": "SAVE",
         "gameState": {
           "score": score,
-          "positionX": bX,
-          "positionY": bY,
-          "obstacles": obstacles
+          "bX": bX,
+          "bY": bY,
         }
       };
       window.parent.postMessage(msg, "*");
@@ -160,29 +182,41 @@ function SubmitScore(){
 }
 
 function PlayGame(){
-  ctx.drawImage(bg,0,0);
-  
+
+  //ctx.drawImage(bg,0,0);
+
+  // Background adapt the size of canvas
+  // The color is set at the same time
+
+  ctx.fillStyle = "#9ea7b8";
+  ctx.fillRect(0,0,width,height);
+
+
   if (gamecontinues){
     for(var i = 0; i < obstacles.length; i++){
 
-        constant = obstacleLeft.width+gap;
-        ctx.drawImage(obstacleLeft, obstacles[i].x, obstacles[i].y);
-        ctx.drawImage(obstacleRight, obstacles[i].x+constant, obstacles[i].y);
+        constant = width+gap;
+        ctx.drawImage(obstacleLeft, obstacles[i].x, obstacles[i].y,width,0.05*height);
+        ctx.drawImage(obstacleRight, obstacles[i].x+constant, obstacles[i].y,width,0.05*height);
 
-        // move obstacle
+        // Move obstacle
         obstacles[i].y++;
-        if( obstacles[i].y == 250 ){
+
+        // New obstacle is added when previous passes the point
+        if( obstacles[i].y == Math.floor(canvas.height/3) ){
             obstacles.push({
-                x : Math.floor(Math.random()*obstacleLeft.width)-obstacleLeft.width,
+                x : Math.floor(Math.random()*width)-width,
                 y : 0
             });
         }
 
-        // detect collision
-        if( bY >= obstacles[i].y && bY <= obstacles[i].y + obstacleLeft.height && (bX <= obstacles[i].x + obstacleLeft.width || bX + car.width >= obstacles[i].x + obstacleLeft.width+gap) || bX < 0 || bX + car.width >= canvas.width){
+        // Detect collision
+        if( bY >= obstacles[i].y && bY <= obstacles[i].y + 0.05*height && (bX <= obstacles[i].x + width || bX + car.width >= obstacles[i].x + width+gap) || bX < 0 || bX + car.width >= canvas.width){
           gamecontinues=0;
         }
-        if(obstacles[i].y == 500){
+        // Obstacle is removed and points are increased when obstacle
+        // is at the bottom of the canvas
+        if(obstacles[i].y == Math.floor(canvas.height)){
             obstacles.splice(0,1);
             score++;
         }
@@ -190,7 +224,7 @@ function PlayGame(){
 
     ctx.drawImage(car,bX,bY);
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle ="#000000";
     ctx.font = "bold 15px Arial";
     ctx.fillText("Score : "+score,0.5*canvas.width-30,canvas.height-30);
 
@@ -205,8 +239,6 @@ function EndGame(){
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 	$("#info").show();
-    $("#info").addClass("show");
-    $("#canvas").addClass("hide");
   ShowScoreboard()
 }
 
