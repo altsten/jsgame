@@ -1,21 +1,15 @@
 #infotext {
   font-family:sans-serif;
   padding:1em;
-  font-weight:900;
+  font-weight:800;
   display:block;
+  text-align: center;
 }
 
-.hide {
-  display: none;
-}
-.show {
-  display: block;
-}
+
 button {
-  display: block;
-  width:250px;
-  font-size: 20px;
-  padding: 10px 20px;
+  font-size: 15px;
+  padding: 5px 10px;
   border-radius: 8px;
   cursor: pointer;
   background-color: #4CAF50;
@@ -29,7 +23,6 @@ button:active {
 
 table {
     border-collapse: collapse;
-    width: 250px;
 }
 
 th, td {

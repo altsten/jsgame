@@ -52,9 +52,26 @@ $(document).ready(function (){
   width=window.innerWidth;
   height=window.innerHeight;
 
+  // buttons dimensions are changed also based on parent window
+  var buttons = document.getElementsByTagName("button");
+  for (var i = 0; i < buttons.length; i++) {
+    var buttonvariable = buttons[i];
+    if (width>200)
+    {
+      buttonvariable.style.width="49%";
+      //canvas height is been reduced by total 2 x buttonHeight
+      height=height-25;
+    }
+    else
+    {
+      buttonvariable.style.width="100%";
+      //canvas height is been reduced by total 1 x buttonHeight
+      height=height-12;
+    }
+
+  }
   canvas.width=width;
   canvas.height=height;
-
 
   // Eventlistener for player's arrow keys
   // and related move actions
@@ -76,6 +93,24 @@ $(document).ready(function (){
    }
   });
 
+  // Eventlistener for player's touches
+  // and related move actions (only left/right)
+  document.addEventListener("touchstart", function (e) {
+    if (gamecontinues){
+      var xPos= e.originalEvent.touches[0].clientX;
+      if (xPos<width/2)
+      {
+        bX -= 20;
+        }
+      else
+      {
+         bX += 20;
+       }
+     }
+  });
+
+
+
   // Eventlistener for Start-button
   $("#start").click(function(){
     // Removes scorelist from view
@@ -89,8 +124,8 @@ $(document).ready(function (){
       y : 0
     };
 
-    bX = 140;
-    bY = 300;
+    bX = width/2;
+    bY = height-100;
 
     gamecontinues=1;
     score=0;
@@ -131,8 +166,13 @@ $(document).ready(function (){
         alert("Game noticed LOAD, starting game with loaded specs");
 
         score = e.data.gameState.score;
+
+        // These are the specs. But let's not use thsoe yet
         bX = e.data.gameState.bX;
         bY = e.data.gameState.bY;
+
+        bX = width/2;
+        bY = height-100;
 
         // Game starts with specs above
         // and basic setting below
