@@ -149,32 +149,22 @@ $(document).ready(function (){
 
   // Eventlistener for SubmitScore-button
   $("#submit_score").click(function(){
-    //For debugging before real actions have been added
-    alert("Submit score pressed");
     SubmitScore();
   });
 
   // Eventlistener for Save-button
   $("#save").click(function(){
-    //For debugging before real actions have been added
-
-    alert("Save pressed");
     Save();
   });
 
   // Eventlistener for Load-button
   $("#load").click(function(){
-    //For debugging before real actions have been added
-    alert("Load pressed");
     Load();
   });
 
   // Eventlistener for incoming messages and errors
   window.addEventListener("message", function(e) {
       if(e.data.messageType === "LOAD") {
-
-        // For debugging
-        alert("Game noticed LOAD, starting game with loaded specs");
 
         score = e.data.gameState.score;
 
