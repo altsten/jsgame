@@ -30,9 +30,11 @@ obstacleRight.src = "images/objRight.png";
 var gap = 85;
 var constant;
 
-var bX = 140;
-var bY = 300;
+// car location variables
+var bX;
+var bY;
 
+// window size variables
 var height;
 var width;
 
