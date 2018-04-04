@@ -305,8 +305,3 @@ function ShowScoreboard(){
   $("#score_list").append("<tr><td> YOU </td><td>" +score+ "</td></tr>");
 
 }
-
-function ShowHide(){
-  // Function handling hiding/showing
-  // elements based on events
-}
