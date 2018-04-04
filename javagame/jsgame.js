@@ -9,6 +9,12 @@
 var canvas;
 var ctx;
 
+//settings
+var settings = {
+    width: 500,
+    height: 500,
+}
+
 // images
 var car = new Image();
 var bg = new Image();
@@ -44,7 +50,10 @@ var obstacles = [];
 
 
 $(document).ready(function (){
-
+  //notify parent window about optimal size for the game
+  //game store can modify them to fit into the users screen
+  sendSettingsMsg ();
+  
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
 
@@ -73,6 +82,8 @@ $(document).ready(function (){
   canvas.width=width;
   canvas.height=height;
 
+  
+  
   // Eventlistener for player's arrow keys
   // and related move actions
   document.addEventListener("keydown", function (e) {
@@ -167,12 +178,10 @@ $(document).ready(function (){
 
         score = e.data.gameState.score;
 
-        // These are the specs. But let's not use thsoe yet
-        bX = e.data.gameState.bX;
-        bY = e.data.gameState.bY;
+        // These are the location variables for the car
+        bX = e.data.gameState.bX*width;
+        bY = e.data.gameState.bY*height;
 
-        bX = width/2;
-        bY = height-100;
 
         // Game starts with specs above
         // and basic setting below
@@ -193,6 +202,17 @@ $(document).ready(function (){
 
 });
 
+function sendSettingsMsg () {
+    var msg = {
+        messageType: "SETTINGS",
+        options: {
+            "width": settings.width,
+            "height": settings.height
+        }
+    };
+    window.parent.postMessage(msg, "*");
+}
+
 function Load(){
   var msg = {
         "messageType": "LOAD_REQUEST",
@@ -205,8 +225,8 @@ function Save(){
         "messageType": "SAVE",
         "gameState": {
           "score": score,
-          "bX": bX,
-          "bY": bY,
+          "bX": bX/width,
+          "bY": bY/height,
         }
       };
       window.parent.postMessage(msg, "*");
@@ -285,29 +305,11 @@ function EndGame(){
 function ShowScoreboard(){
 
   alert("Peli loppui. Score: "+score);
-  dict_scores=[];
-  //for testing
-  dict_scores.push({
-    key: "James",
-    value: "16"
-  });
-
-  dict_scores.push({
-    key: "Janette",
-    value: "15"
-  });
-  dict_scores.push({
-    key: "John",
-    value: "1"
-  });
 
   gamehaseneded=0;
   $("#score_list").html("");
 
   $("#score_list").append("<tr><th> Player </th><th> Score </th></tr>");
-  for (var i =0; i < dict_scores.length ; i++) {
-    $("#score_list").append("<tr><td>" + dict_scores[i].key +"</td><td>" +dict_scores[i].value +"</td></tr>");
-  }
   $("#score_list").append("<tr><td> YOU </td><td>" +score+ "</td></tr>");
 
 }
