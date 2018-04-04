@@ -31,8 +31,8 @@ var gap = 85;
 var constant;
 
 // car location variables
-var bX;
-var bY;
+var bX=0;
+var bY=0;
 
 // window size variables
 var height;
