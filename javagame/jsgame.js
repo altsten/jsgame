@@ -196,7 +196,7 @@ $(document).ready(function (){
 
 function sendSettingsMsg () {
     var msg = {
-        messageType: "SETTINGS",
+        messageType: "SETTING",
         options: {
             "width": settings.width,
             "height": settings.height
