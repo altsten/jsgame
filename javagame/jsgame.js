@@ -55,37 +55,11 @@ $(document).ready(function (){
   //notify parent window about optimal size for the game
   //game store can modify them to fit into the users screen
   sendSettingsMsg ();
-  
+
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
 
-  // Canvas adapts the dimensions of parent window
-  width=window.innerWidth;
-  height=window.innerHeight;
 
-  // buttons dimensions are changed also based on parent window
-  var buttons = document.getElementsByTagName("button");
-  for (var i = 0; i < buttons.length; i++) {
-    var buttonvariable = buttons[i];
-    if (width>200)
-    {
-      buttonvariable.style.width="49%";
-      //canvas height is been reduced by total 2 x buttonHeight
-      height=height-25;
-    }
-    else
-    {
-      buttonvariable.style.width="100%";
-      //canvas height is been reduced by total 1 x buttonHeight
-      height=height-12;
-    }
-
-  }
-  canvas.width=width;
-  canvas.height=height;
-
-  
-  
   // Eventlistener for player's arrow keys
   // and related move actions
   document.addEventListener("keydown", function (e) {
@@ -126,6 +100,8 @@ $(document).ready(function (){
 
   // Eventlistener for Start-button
   $("#start").click(function(){
+
+    ModifySize();
     // Removes scorelist from view
     $("#score_list").html("");
 
@@ -168,6 +144,8 @@ $(document).ready(function (){
   window.addEventListener("message", function(e) {
       if(e.data.messageType === "LOAD") {
 
+        ModifySize();
+
         score = e.data.gameState.score;
 
         // These are the location variables for the car
@@ -191,6 +169,7 @@ $(document).ready(function (){
         alert(e.data.info);
       }
     });
+
 
 });
 
@@ -303,5 +282,34 @@ function ShowScoreboard(){
 
   $("#score_list").append("<tr><th> Player </th><th> Score </th></tr>");
   $("#score_list").append("<tr><td> YOU </td><td>" +score+ "</td></tr>");
+
+}
+
+function ModifySize(){
+  // Canvas adapts the dimensions of parent window
+  width=window.innerWidth;
+  height=window.innerHeight;
+
+  // buttons dimensions are changed also based on parent window
+  var buttons = document.getElementsByTagName("button");
+  for (var i = 0; i < buttons.length; i++) {
+    var buttonvariable = buttons[i];
+    if (width>200)
+    {
+      buttonvariable.style.width="49%";
+      //canvas height is been reduced by total 2 x buttonHeight
+      height=height-25;
+    }
+    else
+    {
+      buttonvariable.style.width="100%";
+      //canvas height is been reduced by total 1 x buttonHeight
+      height=height-12;
+    }
+
+  }
+
+  canvas.width=width;
+  canvas.height=height;
 
 }
