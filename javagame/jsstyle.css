@@ -8,6 +8,7 @@
 
 
 button {
+  width:100%;
   font-size: 15px;
   padding: 5px 10px;
   border-radius: 8px;
