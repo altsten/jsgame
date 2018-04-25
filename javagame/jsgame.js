@@ -185,7 +185,7 @@ function sendSettingsMsg () {
 }
 
 function Load(){
-  EndGame();
+  gamecontinues=0;
   var msg = {
         "messageType": "LOAD_REQUEST",
       };
@@ -270,7 +270,7 @@ function PlayGame(){
 }
 
 function EndGame(){
-
+	
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 	$("#info").show();
   ShowScoreboard()
