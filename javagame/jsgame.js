@@ -185,7 +185,7 @@ function sendSettingsMsg () {
 }
 
 function Load(){
-	EndGame();
+  EndGame();
   var msg = {
         "messageType": "LOAD_REQUEST",
       };
