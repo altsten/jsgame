@@ -115,7 +115,7 @@ $(document).ready(function (){
 
     bX = width/2;
     bY = height-100;
-	gamecontinues=0;
+	EndGame();
     gamecontinues=1;
     score=0;
     dict_scores=[];
@@ -185,7 +185,7 @@ function sendSettingsMsg () {
 }
 
 function Load(){
-  gamecontinues=0;
+  EndGame();
   var msg = {
         "messageType": "LOAD_REQUEST",
       };
