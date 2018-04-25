@@ -115,7 +115,7 @@ $(document).ready(function (){
 
     bX = width/2;
     bY = height-100;
-
+	gamecontinues=0;
     gamecontinues=1;
     score=0;
     dict_scores=[];
