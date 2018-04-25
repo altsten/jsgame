@@ -278,8 +278,6 @@ function EndGame(){
 
 function ShowScoreboard(){
 
-  alert("Peli loppui. Score: "+score);
-
   gamehaseneded=0;
   $("#score_list").html("");
 
