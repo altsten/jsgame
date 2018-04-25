@@ -243,6 +243,8 @@ function PlayGame(){
         }
 
         // Detect collision
+		// Protip: if you fly below or above the screen there are nothing to collide your car with so you get many points ;)
+		// You can however collide with the sides of the screen
         if( bY >= obstacles[i].y && bY <= obstacles[i].y + 0.05*height && (bX <= obstacles[i].x + width || bX + car.width >= obstacles[i].x + width+gap) || bX < 0 || bX + car.width >= canvas.width){
           gamecontinues=0;
         }
